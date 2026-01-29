@@ -90,12 +90,72 @@ flowchart TD
 ```
 ---
 
-## Poster and Rating Pipeline
-```mermaid
-sequenceDiagram
-    participant UI as Streamlit UI
-    participant OMDb as OMDb API
-    UI->>OMDb: Request poster & rating (IMDb ID)
-    OMDb-->>UI: Poster URL + IMDb rating
-    UI->>UI: Render movie card
+
+---
+
+## 🖼️ Poster & Rating Handling
+
+- Posters and ratings are fetched using the **OMDb API**
+- Some less popular or older movies may not have posters available
+- A placeholder image is displayed when posters are unavailable
+- API responses are cached to improve performance and avoid rate limits
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|------|-----------|
+Backend | Python |
+ML | TF-IDF, Cosine Similarity (scikit-learn) |
+Data Processing | Pandas |
+UI | Streamlit |
+Posters & Ratings | OMDb API |
+Deployment | Streamlit Cloud |
+Persistence | Pickle |
+
+---
+
+## 📂 Project Structure
 ```
+Bollywood-Movie-Recommendation-System/
+│── streamlit.py
+│── bollywood_movies.pkl
+│── bollywood_similarity.pkl
+│── requirements.txt
+│── README.md
+```
+
+---
+
+## ⚙️ Installation & Local Run
+
+```bash
+git clone https://github.com/pranayk15/Bollywood-Movie-Recommender-System.git
+cd Bollywood-Movie-Recommender-System
+pip install -r requirements.txt
+streamlit run streamlit.py
+```
+
+---
+
+## 🔐 Environment Variables
+```
+OMDB_API_KEY=your_omdb_api_key
+```
+
+---
+
+## 🙌 Acknowledgements
+
+- OMDb API for movie posters and ratings
+
+- Streamlit for rapid UI development
+
+- IMDb metadata sources
+
+---
+
+## 👤 Author
+Pranay Kale
+
