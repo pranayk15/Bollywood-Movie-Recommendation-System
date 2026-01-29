@@ -73,13 +73,11 @@ st.sidebar.title("🧠 How this Recommender Works")
 
 st.sidebar.markdown(
     """
-    ---
     ### ℹ️ Poster Availability
     Movie posters are fetched from IMDb via the OMDb API.
     
     Some **less popular or older Bollywood movies** may not have posters available in the IMDb database.
     In such cases, a placeholder image is displayed.
-    
     ### 🎯 Problem Statement
     Recommend **relevant Bollywood movies** based on a user’s selected movie,
     avoiding very old or obscure recommendations.
@@ -229,5 +227,6 @@ if st.button("▶ Recommend"):
                 """,
                 unsafe_allow_html=True
             )
+
 
 
