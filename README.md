@@ -88,3 +88,14 @@ flowchart TD
     E --> F[Fetch posters & IMDb ratings]
     F --> G[Display results in Streamlit UI]
 ```
+---
+
+## Poster and Rating Pipeline
+```mermaid
+sequenceDiagram
+    participant UI as Streamlit UI
+    participant OMDb as OMDb API
+    UI->>OMDb: Request poster & rating (IMDb ID)
+    OMDb-->>UI: Poster URL + IMDb rating
+    UI->>UI: Render movie card
+```
