@@ -3,10 +3,8 @@ import pickle
 import pandas as pd
 import requests
 
-# =============================
 # CONFIG
-# =============================
-OMDB_API_KEY = "80c068a7"   # your OMDb key
+OMDB_API_KEY = st.secrets['OMDB_API_KEY']   # your OMDb key
 
 st.set_page_config(
     page_title="Bollywood Movie Recommender",
@@ -14,9 +12,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# =============================
-# NETFLIX-STYLE DARK THEME CSS
-# =============================
 st.markdown(
     """
     <style>
@@ -73,9 +68,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# =============================
 # SIDEBAR — MODEL EXPLANATION
-# =============================
 st.sidebar.title("🧠 How this Recommender Works")
 
 st.sidebar.markdown(
@@ -149,15 +142,11 @@ st.sidebar.markdown(
     """
 )
 
-# =============================
 # LOAD DATA
-# =============================
 df = pickle.load(open("bollywood_movies.pkl", "rb"))
 similarity = pickle.load(open("bollywood_similarity.pkl", "rb"))
 
-# =============================
 # OMDb FETCH (POSTER + RATING)
-# =============================
 @st.cache_data
 def get_movie_details(imdb_id):
     fallback_poster = "https://via.placeholder.com/300x450?text=No+Poster"
@@ -180,9 +169,7 @@ def get_movie_details(imdb_id):
     except:
         return fallback_poster, fallback_rating
 
-# =============================
 # RECOMMENDATION LOGIC
-# =============================
 def recommend(movie):
     idx = df[df['movie_name'] == movie].index[0]
     sim_scores = list(enumerate(similarity[idx]))
@@ -198,9 +185,7 @@ def recommend(movie):
     final_scores = sorted(final_scores, key=lambda x: x[1], reverse=True)[1:6]
     return df.iloc[[i[0] for i in final_scores]]
 
-# =============================
 # MAIN UI
-# =============================
 st.markdown(
     "<h1 class='netflix-title'>🎬 Bollywood Movie Recommender</h1>",
     unsafe_allow_html=True
@@ -237,3 +222,4 @@ if st.button("▶ Recommend"):
                 """,
                 unsafe_allow_html=True
             )
+
