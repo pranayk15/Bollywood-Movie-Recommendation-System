@@ -199,7 +199,7 @@ st.markdown(
 )
 
 st.markdown(
-    "<p style='color:#b3b3b3;'>Netflix-style • Popularity-aware • IMDb ratings</p>",
+    "<p style='color:#b3b3b3;'>Popularity-aware • IMDb ratings</p>",
     unsafe_allow_html=True
 )
 
@@ -229,6 +229,7 @@ if st.button("▶ Recommend"):
                 """,
                 unsafe_allow_html=True
             )
+
 
 
 
