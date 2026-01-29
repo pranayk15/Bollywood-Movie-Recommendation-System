@@ -7,6 +7,7 @@ The application dynamically displays **IMDb movie posters and ratings** using th
 
 ## 🔗 Live Demo
 👉 **Live App**: https://bollywood-movie-recommendation-system.streamlit.app/
+
 👉 **GitHub Repo**: https://github.com/pranayk15/Bollywood-Movie-Recommendation-System
 
 ---
@@ -77,8 +78,8 @@ Final Score =
 ## 📐 System Architecture
 
 ### Recommendation Flow
-mermaid
-```
+
+```mermaid 
 flowchart TD
     A[User selects a movie] --> B[Find movie index]
     B --> C[Compute cosine similarity]
