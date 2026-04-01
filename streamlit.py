@@ -9,7 +9,7 @@ import os
 # CONFIG
 # =============================
 OMDB_API_KEY = "80c068a7"   # your OMDb key
-MODEL_PATH = "movie_similarity.pkl"
+MODEL_PATH = "movie_similarity (1).pkl"
 
 # Google Drive file ID
 DRIVE_URL = "https://drive.google.com/uc?id=1Cdkl3c6BxbuAoZWjm9AFddW6jPMtoadS"
