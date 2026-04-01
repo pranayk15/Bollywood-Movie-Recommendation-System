@@ -114,14 +114,56 @@ st.sidebar.markdown(
     TF-IDF + Transformer embeddings
 
     Hybrid Similarity:
+    ```
     0.6 × TF-IDF  
     0.4 × Embedding
+    ```
 
     ---
     ### ⭐ Final Ranking
     Final Score =
+    ```
     0.7 × Content Similarity  
     0.3 × Popularity Score
+    ```
+
+    ---
+
+    This ensures recommendations are **relevant while prioritizing relatively modern movies**.
+
+    ---
+
+    ### 🎬 How to Use
+    1. Select a movie from the dropdown menu.  
+    2. Click **Recommend**.  
+    3. The system will display **5 similar Bollywood movies**.  
+    4. Each recommendation includes poster, IMDb rating, year, and genre.
+    
+    ---
+    
+    ### 📊 Recommendation Output
+    Each recommendation card displays:
+    
+    - 🎬 Movie Poster  
+    - ⭐ IMDb Rating  
+    - 📅 Release Year  
+    - 🎭 Genre  
+    
+    This helps users quickly evaluate recommended movies.
+
+    ---
+    
+    ### ⚠️ Limitations
+    - Some movies may not have posters available in the IMDb database.
+    - The system uses **content similarity**, so it may not capture personal user preferences.
+    - Recommendations depend on the **quality of movie metadata**.
+    
+    ---
+
+    ### 🔗 Project Repository
+    View the full project on GitHub:
+    
+    https://github.com/pranayk15/Bollywood-Movie-Recommendation-System
     """
 )
 
