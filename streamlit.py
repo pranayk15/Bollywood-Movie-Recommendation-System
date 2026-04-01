@@ -2,11 +2,17 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import gdown
+import os
 
 # =============================
 # CONFIG
 # =============================
 OMDB_API_KEY = "80c068a7"   # your OMDb key
+MODEL_PATH = "movie_similarity.pkl"
+
+# Google Drive file ID
+DRIVE_URL = "https://drive.google.com/uc?id=1Cdkl3c6BxbuAoZWjm9AFddW6jPMtoadS"
 
 st.set_page_config(
     page_title="Bollywood Movie Recommender",
@@ -92,77 +98,52 @@ st.sidebar.markdown(
     Recommend **relevant Bollywood movies** based on a selected movie while avoiding outdated or irrelevant recommendations.
 
     ---
-
     ### 🧩 Model Type
     **Hybrid Content-Based Recommendation System**
 
-    Movies are recommended based on **content similarity derived from metadata**, without using user interaction history.
-
     ---
-
     ### 🔍 Features Used
-    - **Overview**
-    - **Genre**
-    - **Director**
-    - **Cast**
-    - **Release year** (for popularity bias)
+    - Overview
+    - Genre
+    - Director
+    - Cast
+    - Release year
 
     ---
-
     ### 🧠 Text Representation
-    - **TF-IDF Vectorization**
-    - **SentenceTransformer embeddings**
-    - Captures both **keyword-level and semantic similarity**
+    TF-IDF + Transformer embeddings
 
     Hybrid Similarity:
-    ```
-    0.6 × TF-IDF Similarity
-            +
-    0.4 × Embedding Similarity
-    ```
+    0.6 × TF-IDF  
+    0.4 × Embedding
 
     ---
-
     ### ⭐ Final Ranking
-    ```
     Final Score =
-    0.7 × Content Similarity
-            +
+    0.7 × Content Similarity  
     0.3 × Popularity Score
-    ```
-    
-    ---
-    
-    ### 🖼️ Poster & Ratings
-    - Posters fetched using the **OMDb API**
-    - IMDb ratings displayed for better decision making
-    - Robust fallback if poster is unavailable
-    
-    ---
-    
-    ## 🛠️ Tech Stack
-    - **Python**
-    - **Pandas & NumPy**
-    - **Scikit-learn**
-    - **SentenceTransformers**
-    - **Streamlit**
-    - **OMDb API**
-    - **Pickle** (model persistence)
-
     """
 )
+
+# =============================
+# DOWNLOAD MODEL IF NOT PRESENT
+# =============================
+if not os.path.exists(MODEL_PATH):
+    st.info("Downloading similarity model...")
+    gdown.download(DRIVE_URL, MODEL_PATH, quiet=False)
 
 # =============================
 # LOAD DATA
 # =============================
 df = pickle.load(open("movies_metadata.pkl", "rb"))
-similarity = pickle.load(open("movie_similarity.pkl", "rb"))
+similarity = pickle.load(open(MODEL_PATH, "rb"))
 
 # =============================
 # OMDb FETCH (POSTER + RATING)
 # =============================
 @st.cache_data
 def get_movie_details(imdb_id):
+
     fallback_poster = "https://via.placeholder.com/300x450?text=No+Poster"
     fallback_rating = "N/A"
 
@@ -187,10 +168,12 @@ def get_movie_details(imdb_id):
 # RECOMMENDATION LOGIC
 # =============================
 def recommend(movie):
+
     idx = df[df['movie_name'] == movie].index[0]
     sim_scores = list(enumerate(similarity[idx]))
 
     final_scores = []
+
     for i, sim in sim_scores:
         score = (
             0.7 * sim +
@@ -199,6 +182,7 @@ def recommend(movie):
         final_scores.append((i, score))
 
     final_scores = sorted(final_scores, key=lambda x: x[1], reverse=True)[1:6]
+
     return df.iloc[[i[0] for i in final_scores]]
 
 # =============================
@@ -218,12 +202,16 @@ movie_list = sorted(df['movie_name'].unique())
 selected_movie = st.selectbox("🔍 Search a movie", movie_list)
 
 if st.button("▶ Recommend"):
+
     with st.spinner("Finding movies you’ll love..."):
         results = recommend(selected_movie)
 
     cols = st.columns(5)
+
     for col, (_, row) in zip(cols, results.iterrows()):
+
         with col:
+
             poster, rating = get_movie_details(row.movie_id)
 
             st.markdown(
