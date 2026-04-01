@@ -1,0 +1,5 @@
+movie_similarity (1).pkl
+venv/
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
