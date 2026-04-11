@@ -188,7 +188,7 @@ If a poster is unavailable, a **placeholder image** is displayed.
 Bollywood-Movie-Recommendation-System
 │
 ├── streamlit.py
-├── train_model.py
+├── Movie_Model.ipynb
 ├── movies_metadata.pkl
 ├── requirements.txt
 ├── README.md
